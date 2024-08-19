@@ -299,7 +299,7 @@ site_configuration = {
             # https://www.ucl.ac.uk/advanced-research-computing/here-now-new-platforms
             'name': 'locust',
             'descr': 'Locust (a UCL_ARC Contender system)',
-            'hostnames': ['locust   .rc.ucl.ac.uk'],
+            'hostnames': ['locust.rc.ucl.ac.uk'],
             'max_local_jobs': 40,
             'partitions': [
                 {
