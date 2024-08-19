@@ -306,7 +306,7 @@ site_configuration = {
             'partitions': [
                 {
                     'name': 'main',
-                    'descr': 'Intel(R) Xeon(R) Gold 6226 with 4x IPU_M2000 units',
+                    'descr': 'AMD EPYC 7742 with 4x IPU_M2000 units',
                     'scheduler': 'local',
                     'launcher': 'mpirun',  # could consider 'local' but e.g. osu benchmarks are 
                     'environs': ['default'],
