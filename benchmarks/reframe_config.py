@@ -296,6 +296,32 @@ site_configuration = {
             ],
         },  # end Myriad
         {
+            # https://www.ucl.ac.uk/advanced-research-computing/here-now-new-platforms
+            'name': 'cricket',
+            'descr': 'Cricket (a UCL_ARC Contender system)',
+            'hostnames': ['cricket.rc.ucl.ac.uk'],
+            'max_local_jobs': 5,
+            'partitions': [
+                {
+                    'name': 'main',
+                    'descr': 'Neoverse-N1 with 2x Nvidia A100 GPU',
+                    'scheduler': 'local',
+                    'launcher': 'mpirun',  # could consider 'local' but e.g. osu benchmarks are 
+                    'environs': ['default'],
+                    'max_jobs': 80,  # a guess equal to the number of cores
+                    'processor': {
+                        'platform': 'arm64',
+                        'num_cpus': 80,
+                        'num_cpus_per_core': 1,
+                        'num_sockets': 1,
+                        'num_cpus_per_socket': 80,
+                    },
+                    # gpus could be specfied here in a 'devices' section but 
+                    #   https://reframe-hpc.readthedocs.io/en/stable/config_reference.html#config.systems.partitions.devices.type is short on values to use
+                },
+            ],
+        },  # end cricket
+        {
             # https://gw4-isambard.github.io/docs/user-guide/MACS.html
             'name': 'isambard-macs',
             'descr': 'Isambard 2 - Multi-Architecture Comparison System',
