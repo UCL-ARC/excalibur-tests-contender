@@ -332,6 +332,32 @@ site_configuration = {
         },  # end Myriad
         {
             # https://www.ucl.ac.uk/advanced-research-computing/here-now-new-platforms
+            'name': 'zeno',
+            'descr': 'Terrarium (a UCL_ARC Contender system)',
+            'hostnames': ['zeno.rc.ucl.ac.uk'],
+            'max_local_jobs': 40,
+            'partitions': [
+                {
+                    'name': 'main',
+                    'descr': 'AMD EPYC 7453 with Qualcomm Claod AI100 cards',
+                    'scheduler': 'local',
+                    'launcher': 'mpirun',  # could consider 'local' but e.g. osu benchmarks are 
+                    'environs': ['default'],
+                    'max_jobs': 56,  # a guess equal to the number of cores
+                    'processor': {
+                        'platform': 'x86_64',
+                        'num_cpus': 112,
+                        'num_cpus_per_core': 2,
+                        'num_sockets': 2,
+                        'num_cpus_per_socket': 56,
+                    },
+                    # gpus could be specfied here in a 'devices' section but 
+                    #   https://reframe-hpc.readthedocs.io/en/stable/config_reference.html#config.systems.partitions.devices.type is short on values to use
+                },
+            ],
+        },  # end zeno
+        {
+            # https://www.ucl.ac.uk/advanced-research-computing/here-now-new-platforms
             'name': 'locust',
             'descr': 'Locust (a UCL_ARC Contender system)',
             'hostnames': ['locust.rc.ucl.ac.uk'],
