@@ -332,6 +332,30 @@ site_configuration = {
         },  # end Myriad
         {
             # https://www.ucl.ac.uk/advanced-research-computing/here-now-new-platforms
+            'name': 'locust',
+            'descr': 'Locust (a UCL_ARC Contender system)',
+            'hostnames': ['locust.rc.ucl.ac.uk'],
+            'max_local_jobs': 40,
+            'partitions': [
+                {
+                    'name': 'main',
+                    'descr': 'Grace Neoverse-V2 in GH200 superchip',
+                    'scheduler': 'local',
+                    'launcher': 'mpirun',  # could consider 'local' but e.g. osu benchmarks are 
+                    'environs': ['default'],
+                    'max_jobs': 72,  # a guess equal to the number of cores
+                    'processor': {
+                        'platform': 'arm64',
+                        'num_cpus': 72,
+                        'num_cpus_per_core': 1,
+                        'num_sockets': 1,
+                        'num_cpus_per_socket': 72,
+                    },
+                    # gpus could be specfied here in a 'devices' section but 
+                    #   https://reframe-hpc.readthedocs.io/en/stable/config_reference.html#config.systems.partitions.devices.type is short on values to use
+                },
+            ],
+        },  # end locust
             'name': 'cricket',
             'descr': 'Cricket (a UCL_ARC Contender system)',
             'hostnames': ['cricket.rc.ucl.ac.uk'],
