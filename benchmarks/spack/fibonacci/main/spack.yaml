@@ -1,0 +1,21 @@
+# This is a Spack Environment file.
+#
+# It describes a set of packages to be installed, along with
+# configuration settings.
+spack:
+  # add package specs to the `specs` list
+  specs: []
+  view: false
+  concretizer:
+    unify: true
+  config:
+    install_tree:
+      root: $env/opt/spack
+  # this failed - reframe tried to build tests with mpicc from the Graphcore SDK mpicc but
+  # this errored as C compiler not working.
+  # packages:
+  #   openmpi:
+  #     externals:
+  #     - spec: openmpi@4.1.4~cuda~cxx~cxx_exceptions~java~memchecker+pmi~static~wrapper-rpath
+  #         schedulers=slurm
+  #       prefix: /opt/graphcore/poplar_sdk-3.2.0/poplar-rhel_8-3.2.0+2580-b82480c629
