@@ -409,7 +409,7 @@ site_configuration = {
                 },
             ],
         },  # end locust
-            'name': 'cricket',
+        {   'name': 'cricket',
             'descr': 'Cricket (a UCL_ARC Contender system)',
             'hostnames': ['cricket.rc.ucl.ac.uk'],
             'max_local_jobs': 5,
