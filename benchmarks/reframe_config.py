@@ -189,6 +189,41 @@ site_configuration = {
             ]
         },  # end CSD3 CentOS 7
         {
+            # https://www.rc.ucl.ac.uk/docs/Clusters/Kathleen/#node-types
+            'name': 'kathleen',
+            'descr': 'Kathleen',
+            'hostnames': ['login[0-9]+.kathleen.ucl.ac.uk'],
+            'max_local_jobs': 1,
+            'partitions': [
+                {
+                    'name': 'compute-node',
+                    'descr': 'Kathleen compute nodes',
+                    'scheduler': 'sge',
+                    'launcher': 'mpirun',
+                    'environs': ['default'],
+                    'max_jobs': 36,
+                    'processor': {
+                        'num_cpus': 40,
+                        'num_cpus_per_core': 1,
+                        'num_sockets': 2,
+                        'num_cpus_per_socket': 20,
+                    },
+                    'resources': [
+                        {
+                            'name': 'mpi',
+                            'options': ['-pe mpi {num_slots}'],
+                        },
+                        {
+                            # Disable hyperthreading (default).
+                            # See https://www.rc.ucl.ac.uk/docs/Clusters/Kathleen/#hyperthreading for details
+                            'name': 'hyperthreads',
+                            'options': ['-l threads=2'],
+                        },
+                    ],
+                }
+            ]
+        }, # end Kathleen
+        {
             # https://www.rc.ucl.ac.uk/docs/Clusters/Myriad/#node-types
             'name': 'myriad',
             'descr': 'Myriad',
@@ -321,6 +356,61 @@ site_configuration = {
                 },
             ],
         },  # end cricket
+        {
+            # for graphcore sdk test apps suggest adding sdk enable in launch script for
+            # the grapcoree app and call that script with reframe.
+            'name': 'mandelbrot',
+            'descr': 'Mandelbrot (a UCL_ARC Contender system)',
+            'hostnames': ['mandelbrot.rc.ucl.ac.uk'],
+            'max_local_jobs': 80,
+            'partitions': [
+                {
+                    'name': 'main',
+                    'descr': 'AMD EPYC 7742 with 4x IPU_M2000 units',
+                    'scheduler': 'local',
+                    'launcher': 'mpirun',  # could consider 'local' but e.g. osu benchmarks are 
+                    'environs': ['default'],
+                    'max_jobs': 128,  # a guess equal to the number of cores
+                    'processor': {
+                        'platform': 'x86_64',
+                        'num_cpus': 256,
+                        'num_cpus_per_core': 2,
+                        'num_sockets': 2,
+                        'num_cpus_per_socket': 128,
+                    },
+                    # gpus could be specfied here in a 'devices' section but 
+                    #   https://reframe-hpc.readthedocs.io/en/stable/config_reference.html#config.systems.partitions.devices.type is short on values to use
+                },
+            ],
+        },  # end mandelbrot
+        {
+            # https://www.ucl.ac.uk/advanced-research-computing/here-now-new-platforms
+            # for graphcore sdk test apps suggest adding sdk enable in launch script for
+            # the grapcoree app and call that script with reframe.
+            'name': 'fibonacci',
+            'descr': 'Fibonacci (a UCL_ARC Contender system)',
+            'hostnames': ['fibonacci.rc.ucl.ac.uk'],
+            'max_local_jobs': 80,
+            'partitions': [
+                {
+                    'name': 'main',
+                    'descr': 'AMD EPYC 7742 with 4x IPU_M2000 units',
+                    'scheduler': 'local',
+                    'launcher': 'mpirun',  # could consider 'local' but e.g. osu benchmarks are 
+                    'environs': ['default'],
+                    'max_jobs': 128,  # a guess equal to the number of cores
+                    'processor': {
+                        'platform': 'x86_64',
+                        'num_cpus': 256,
+                        'num_cpus_per_core': 2,
+                        'num_sockets': 2,
+                        'num_cpus_per_socket': 128,
+                    },
+                    # gpus could be specfied here in a 'devices' section but 
+                    #   https://reframe-hpc.readthedocs.io/en/stable/config_reference.html#config.systems.partitions.devices.type is short on values to use
+                },
+            ],
+        },  # end fibonacci
         {
             # https://gw4-isambard.github.io/docs/user-guide/MACS.html
             'name': 'isambard-macs',
