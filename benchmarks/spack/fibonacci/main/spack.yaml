@@ -6,6 +6,8 @@ spack:
   # add package specs to the `specs` list
   specs: []
   view: false
+  include:
+  - ../../common.yaml
   concretizer:
     unify: true
   config:
