@@ -13,3 +13,11 @@ spack:
   config:
     install_tree:
       root: $env/opt/spack
+  packages:
+    all:
+      variants:
+      - cuda_arch=80  # https://developer.nvidia.com/cuda-gpus at A100
+    cuda:
+      externals:
+      - spec: cuda@12.4
+        prefix: /usr/local/cuda-12.4

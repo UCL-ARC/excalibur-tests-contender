@@ -421,6 +421,7 @@ site_configuration = {
                     'launcher': 'mpirun',  # could consider 'local' but e.g. osu benchmarks are 
                     'environs': ['default'],
                     'max_jobs': 80,  # a guess equal to the number of cores
+                    'features': ['gpu', 'cuda'],
                     'processor': {
                         'platform': 'arm64',
                         'num_cpus': 80,
