@@ -9,7 +9,15 @@ spack:
   include:
   - ../../common.yaml
   concretizer:
-    unify: false
+    unify: true
   config:
     install_tree:
       root: $env/opt/spack
+  packages:
+    all:
+      variants:
+      - cuda_arch=90 
+    cuda:
+      externals:
+      - spec: cuda@12.4
+        prefix: /usr/local/cuda-12.4
