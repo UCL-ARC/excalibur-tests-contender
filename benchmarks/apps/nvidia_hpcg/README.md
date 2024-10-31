@@ -1,12 +1,12 @@
 # Nvidia-HPCG benchmarks
 
  NVIDIA HPCG is based on the [HPCG](https://hpcg-benchmark.org/) Conjugate Gradient solver benchmark and optimized for performance on NVIDIA accelerated HPC systems.
-At the time of writing, there are three benchmarks in the suite: the original implementation, one which solves the same problem with a hard-coded stencil, and one 
-which solves a different problem with an [LFRic](https://www.metoffice.gov.uk/research/approach/modelling-systems/lfric) stencil and data.
 
 ## Usage
 
 Note that the executable (`xhpcg-cpu` or `xhpcg`) and the driver script that sets various environment variables must be available in `PATH`. This app does not build the executable and just runs the prebuilt executable.
+
+The systems intending to run the test on `aarch64` platforms must define the `grace` feature in the partition.
 
 From the top-level directory of the repository, you can run the benchmarks with
 

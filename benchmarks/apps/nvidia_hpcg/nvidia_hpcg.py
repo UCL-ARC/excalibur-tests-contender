@@ -5,22 +5,23 @@
 
 import reframe as rfm
 import reframe.utility.sanity as sn
+from reframe.core.backends import getlauncher
 
 
 @rfm.simple_test
 class NVidiaHPCGGraceOnlyBenchmark(rfm.RunOnlyRegressionTest):
-    valid_systems = ["-gpu"]
-    valid_prog_environs = ["default"]
-    num_cpus_per_task = 1
-    num_tasks = required
-    num_tasks_per_node = required
+    valid_systems = [r'-gpu +grace']
+    valid_prog_environs = ['default']
+    # num_cpus_per_task = 1
+    # num_tasks = required
+    # num_tasks_per_node = required
 
     # The program for running the benchmarks.
-    executable = "run_xhpcg_grace_cpuonly.sh"
+    executable = 'run_xhpcg_grace_cpuonly.sh'
     # Arguments to pass to the program above to run the benchmarks.
     executable_opts = []
     # Time limit of the job, automatically set in the job script.
-    time_limit = "30m"
+    time_limit = '60m'
     # hpcg.dat sets size of grid
     # prerun_cmds.append('cp "$(dirname $(which xhpcg))/hpcg.dat" .')
 
@@ -30,31 +31,31 @@ class NVidiaHPCGGraceOnlyBenchmark(rfm.RunOnlyRegressionTest):
     #     },
     # }
 
-    def set_sanity_patterns(self):
+    @run_before('run')
+    def replace_launcher(self):
+        self.job.launcher = getlauncher('local')()
+
+    @sanity_function
+    def validate(self):
         # Check that it's a valid run
-        self.sanity_patterns = sn.assert_found(
-            r"VALID with a GFLOP/s rating of=", self.stdout
+        return sn.assert_found(r'VALID with a GFLOP/s rating of=', self.stdout)
+
+    @performance_function('flops')
+    def flops(self):
+        # This performance pattern parses the output of the program to extract the desired figure of merit.
+        return sn.extractsingle(
+            r'VALID with a GFLOP/s rating of=(\S+)', self.stdout, 1, float
         )
 
-    @run_before("performance")
-    def set_perf_patterns(self):
-        # This performance pattern parses the output of the program to extract
-        # the desired figure of merit.
-        self.perf_patterns = {
-            "flops": sn.extractsingle(
-                r"VALID with a GFLOP/s rating of=(\S+)", self.stdout, 1, float
-            ),
-        }
-
-    @run_after("setup")
-    def setup_num_tasks(self):
-        self.set_var_default(
-            "num_tasks",
-            self.current_partition.processor.num_cpus
-            // min(1, self.current_partition.processor.num_cpus_per_core)
-            // self.num_cpus_per_task,
-        )
-        self.set_var_default(
-            "num_tasks_per_node",
-            self.current_partition.processor.num_cpus // self.num_cpus_per_task,
-        )
+    # @run_after('setup')
+    # def setup_num_tasks(self):
+    #     self.set_var_default(
+    #         'num_tasks',
+    #         self.current_partition.processor.num_cpus
+    #         // min(1, self.current_partition.processor.num_cpus_per_core)
+    #         // self.num_cpus_per_task,
+    #     )
+    #     self.set_var_default(
+    #         'num_tasks_per_node',
+    #         self.current_partition.processor.num_cpus // self.num_cpus_per_task,
+    #     )
